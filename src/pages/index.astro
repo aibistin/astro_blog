@@ -1,0 +1,137 @@
+---
+import { Icon } from "astro-icon/components";
+import SocialList from "@/components/SocialList.astro";
+import PostPreview from "@/components/blog/PostPreview.astro";
+import PageLayout from "@/layouts/Base.astro";
+import { getAllPosts, sortMDByDate } from "@/utils";
+
+const MAX_POSTS = 10;
+const allPosts = await getAllPosts();
+// const allPostsByDate = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+const latestPosts = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+
+const cactusTech: { desc: string; href: string; title: string; icon: string }[] = [
+	// const cactusTech: { desc: string; href: string; title: string }[] = [
+	{
+		desc: "Build anything, faster.",
+		href: "https://www.perl.org",
+		title: "Perl",
+		icon: "skill-icons:perl",
+	},
+	{
+		desc: "Work quickly and integrate systems more effectively.",
+		href: "https://www.python.org/",
+		title: "Python",
+		icon: "skill-icons:python-light",
+	},
+	{
+		desc: "Build fast websites, faster.",
+		href: "https://astro.build",
+		title: "Astro",
+		icon: "skill-icons:astro",
+	},
+	{
+		desc: "Rapidly build modern websites without ever leaving your HTML.",
+		href: "https://tailwindcss.com",
+		title: "Tailwind CSS",
+		icon: "skill-icons:tailwindcss-light",
+	},
+	{
+		desc: "Markdown for the component era.",
+		href: "https://mdxjs.com/",
+		title: "MDX",
+		icon: "skill-icons:markdown-light",
+	},
+	{
+		desc: "The World's Most Advanced Open Source Relational Database.",
+		href: "https://postgresql.org",
+		title: "PostgreSQL",
+		icon: "skill-icons:postgresql-light",
+	},
+	{
+		desc: "Run JavaScript Everywhere.",
+		href: "https://nodejs.org/",
+		title: "Node.js",
+		icon: "skill-icons:nodejs-light",
+	},
+	{
+		desc: "Avoid the Gates of Hell. Use Linux.",
+		href: "https://www.linux.org/",
+		title: "Linux",
+		icon: "skill-icons:linux-light",
+	},
+	{
+		desc: "The most used database engine in the world.",
+		href: "https://sqlite.org/",
+		title: "SQLite",
+		icon: "skill-icons:sqlite",
+	},
+	// {
+	// 	desc: "An easy to use Icon component for Astro.",
+	// 	href: "https://github.com/natemoo-re/astro-icon#readme",
+	// 	title: "Astro Icon",
+	// 	icon: "skill-icons:github-light",
+	// },
+	// {
+	// 	desc: "Highly customisable source code & syntax highlighter",
+	// 	href: "https://expressive-code.com/",
+	// 	title: "Expressive Code",
+	// 	icon: "skill-icons:astro",
+	// },
+];
+---
+
+<PageLayout meta={{ title: "Home" }}>
+	{/* Hero Section */}
+	<section class="hero">
+		<h1 class="hero-title">Hi!</h1>
+		<p class="hero-subtitle">
+			Welcome to my code blog, where I share knowledge and experience in software development.
+		</p>
+		<div class="my-6">
+			<SocialList />
+		</div>
+	</section>
+
+	{/* Latest Blog Posts */}
+	<section aria-label="Latest blog posts" class="latest-posts mt-12">
+		<h2 class="title mb-4 text-xl">Latest Posts</h2>
+		<ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
+			{
+				latestPosts.map((p) => (
+					<li>
+						<PostPreview post={p} />
+					</li>
+				))
+			}
+		</ul>
+		{/* Optional CTA to view all posts */}
+		<!-- <a href="/posts" class="cta-button">View All Posts</a> -->
+		<div class="mt-6">
+			<a
+				href="/posts"
+				class="cta-button textColor mr-6 flex items-center rounded bg-bgColor font-bold shadow-sm transition duration-300 hover:text-accent hover:shadow-md"
+			>
+				<Icon name="mdi:arrow-right" />View All Posts</a
+			>
+		</div>
+	</section>
+
+	{/* Technologies Section */}
+	<section class="technologies mt-12">
+		<h2 class="title mb-4 text-xl">Technologies I Use</h2>
+		<ul class="grid grid-cols-2 gap-4 md:grid-cols-3">
+			{
+				cactusTech.map(({ desc, href, title, icon }) => (
+					<li class="flex flex-col items-center">
+						<Icon name={icon} class="mb-2 h-12 w-12" />
+						<a class="cactus-link" href={href} rel="noopener noreferrer" target="_blank">
+							{title}
+						</a>
+						<p class="text-sm">{desc}</p>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</PageLayout>

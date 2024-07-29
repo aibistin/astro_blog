@@ -1,0 +1,33 @@
+---
+const perLinks: {
+	friendlyName: string;
+	isWebmention?: boolean;
+	link: string;
+}[] = [
+	{
+		friendlyName: "Perldocs - perlrun",
+		link: "https://perldoc.perl.org/perlrun",
+	},
+	{
+		friendlyName: "Peteris Krumins has some great CLI e-books",
+		link: "https://catonmat.net/books",
+	},
+	{
+		friendlyName: "Dave Cross - From one of his older posts on perl.com",
+		link: "https://www.perl.com/pub/2004/08/09/commandline.html/",
+	},
+];
+---
+
+<h4 id="some-perl-resources">Perl CLI Resources</h4>
+<ul class="items-center gap-x-2">
+	{
+		perLinks.map(({ friendlyName, link }) => (
+			<li>
+				<a href={link} target="_blank">
+					<span>{friendlyName}</span>
+				</a>
+			</li>
+		))
+	}
+</ul>

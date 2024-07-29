@@ -1,0 +1,41 @@
+---
+const usefuLinks: {
+	friendlyName: string;
+	isWebmention?: boolean;
+	link: string;
+}[] = [
+	{
+		friendlyName: "StreetsBlog NYC",
+		link: "https://nyc.streetsblog.org/",
+	},
+	{
+		friendlyName: "Hellgate NYC - Local NYC News",
+		link: "https://hellgatenyc.com/",
+	},
+	{
+		friendlyName: "Liam Quigley - Local Reporter",
+		link: "https://elkue.com/",
+	},
+	{
+		friendlyName: "More Liam Quigley - Twitter",
+		link: "https://twitter.com/_elkue",
+	},
+	{
+		friendlyName: "These Stupid Trucks are Literally Killing Us - YouTube",
+		link: "https://www.youtube.com/watch?v=jN7mSXMruEo",
+	},
+];
+---
+
+<h4 id="some-nyc-street-resources">NYC Street News Links</h4>
+<ul class="items-center gap-x-2">
+	{
+		usefuLinks.map(({ friendlyName, link }) => (
+			<li>
+				<a href={link} target="_blank">
+					<span>{friendlyName}</span>
+				</a>
+			</li>
+		))
+	}
+</ul>
