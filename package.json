@@ -5,6 +5,7 @@
 		"dev": "astro dev",
 		"start": "astro dev",
 		"build": "astro check && astro build",
+		"prod_build": "astro build",
 		"postbuild": "pagefind --site dist",
 		"preview": "astro preview",
 		"format": "prettier -w --cache . && prettier -w --cache **/*.astro",
