@@ -20,6 +20,7 @@
 		"@iconify-json/mdi": "^1.1.67",
 		"@iconify-json/skill-icons": "^1.1.9",
 		"@pagefind/default-ui": "^1.1.0",
+		"@resvg/resvg-js": "^2.6.2",
 		"@tailwindcss/aspect-ratio": "^0.4.2",
 		"@tailwindcss/typography": "^0.5.13",
 		"astro": "4.12.1",
@@ -40,7 +41,6 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.8.3",
-		"@resvg/resvg-js": "^2.6.2",
 		"@types/eslint": "^8.56.10",
 		"@typescript-eslint/eslint-plugin": "^7.5.0",
 		"@typescript-eslint/parser": "^8.0.0",
