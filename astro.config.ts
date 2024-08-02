@@ -48,8 +48,10 @@ export default defineConfig({
 	// ! Please remember to replace the following site property with your own domain
 	site: "https://astro-cactus.chriswilliams.dev/",
 	vite: {
-		optimizeDeps: {
-			exclude: ["@resvg/resvg-js"],
+		build: {
+			rollupOptions: {
+				external: ["@resvg/resvg-js"],
+			},
 		},
 		plugins: [rawFonts([".ttf", ".woff"])],
 	},
