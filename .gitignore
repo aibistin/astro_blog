@@ -26,6 +26,6 @@ pnpm-debug.log*
 Dockerfile 
 .dockerignore
 
-utils
+my_utils
 
 
