@@ -68,13 +68,13 @@ const paginationProps = {
 						{/* ... (SVG icon) ... */}
 						Tags
 					</h2>
-					<ul class="flex flex-wrap gap-2 text-bgColor">
+					<ul class="flex flex-wrap gap-2 bgColor">
 						{uniqueTags.sort().map((tag) => (
 							<li>
 								{/* Improved tag styling */}
 								<a
 									aria-label={`View all posts with the tag: ${tag}`}
-									class="flex items-center justify-center rounded-md bg-gray-200 px-2 py-1 text-xs transition duration-200 hover:bg-gray-300"
+									class="flex items-center justify-center rounded-md bg-gray-200 px-2 py-1 text-xs text-slate-600 transition duration-200 hover:bg-gray-300"
 									href={`/tags/${tag}/`}
 								>
 									{tag}
