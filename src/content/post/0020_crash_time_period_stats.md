@@ -1,12 +1,13 @@
 ---
-title: "NYC Collision Data Analysis"
-publishDate: "25 March 2023"
+title: "Analyze NYC Collision Data"
+publishDate: "20 September 2023"
 description: "Peak times for traffic related casualties in New York City"
 tags: [ "collision", "data", "jupyterNotebook", "matplotlib", "NYC", "pandas", "python", "seaborn", "traffic" ]
 ogImage: "/social-card.png"
 assets_dir: "src/assets/traffic/crash_time_period_stats_files"
 draft: false
 ---
+
 ## Peak Times for Traffic Related Casualties in New York City
 
 Using Python, Pandas, Jupyter Notebooks and Matplotlib to extract useful information about NYC traffic casualties.
@@ -24,7 +25,7 @@ Skip the explanations and go straight to [the results](#the-worst-year-for-colli
 
 Read on to see how I came up with these numbers.
 
-### Technology Used
+## Technology Used
 
 - [Python](https://www.python.org/)
 - [Jupyter Notebook](https://jupyter.org/)
@@ -34,8 +35,7 @@ Read on to see how I came up with these numbers.
 
 ### The Setup
 
-```python
-# Import All Required Python Modules
+```python title="Import all required python modules"
 import datetime
 from pathlib import Path
 import matplotlib.pyplot as plt
@@ -46,13 +46,16 @@ import seaborn as sns
 
 ### Data Formatting Functions
 
-```python
+```python title="empty_to_zero function"
 def empty_to_zero(val):
     """Converts empty values to 0"""
     val = val.strip("\s+")
     return val if len(val) else 0
+```
 
+&nbsp;
 
+```python title="convert_to_zero function"
 def convert_to_numeric(df, column_list):
     """Given a list of DataFrame columns, it converts the empty values to zero"""
     df[column_list] = df[column_list].apply(pd.to_numeric, errors="coerce")
@@ -60,7 +63,7 @@ def convert_to_numeric(df, column_list):
 
 ### Setup Global Variables
 
-```python
+```python title="Dataset column names"
 # This is a list of the dataset columns that I want to use.
 # I'm omitting some fields not necessary for this study. These include:
 # longitude, latitude, the vehicle types as well as crash contributing factors.
@@ -83,7 +86,11 @@ cols_requested = [
     "NUMBER OF MOTORIST INJURED",
     "NUMBER OF MOTORIST KILLED",
 ]
+```
 
+&nbsp;
+
+```python title="crash_dtypes"
 # This dictionary will be used to ensure that the colums are of the expected data type
 crash_dtypes = {
     "CRASH DATE": str,
@@ -95,7 +102,11 @@ crash_dtypes = {
     "CROSS STREET NAME": str,
     "OFF STREET NAME": str,
 }
+```
 
+&nbsp;
+
+```python title="numeric_cols"
 # New column names that contain numeric values
 numeric_cols = [
     "NUM_PERSONS_INJURED",
@@ -107,7 +118,11 @@ numeric_cols = [
     "NUM_MOTORISTS_INJURED",
     "NUM_MOTORISTS_KILLED",
 ]
+```
 
+&nbsp;
+
+```python title="victim_categories"
 # These 4 victim categories are supplied by the NYPD
 victim_categories = ["person", "cyclist", "motorist", "pedestrian"]
 # 'person' status should be a combination of the other three categories
@@ -116,8 +131,8 @@ victim_categories = ["person", "cyclist", "motorist", "pedestrian"]
 
 #### Manipulation Dictionaries
 
-```python
-# For giving colums shorter more meaningful names
+```python title="col_rename"
+#To give columns shorter more meaningful names
 cols_rename = {
     "CRASH DATE": "DATE",
     "CRASH TIME": "TIME",
@@ -134,9 +149,13 @@ cols_rename = {
     "NUMBER OF MOTORIST INJURED": "NUM_MOTORISTS_INJURED",
     "NUMBER OF MOTORIST KILLED": "NUM_MOTORISTS_KILLED",
 }
+```
 
+&nbsp;
+
+```python title="convert_cols"
 # DataFrame columns whose empty values will be converted to zero
-#  Using the 'empty_to_zero' function, defined earlier.
+# Using the 'empty_to_zero' function, defined earlier.
 convert_cols = {
     "NUMBER OF PERSONS INJURED": empty_to_zero,
     "NUMBER OF PERSONS KILLED": empty_to_zero,
@@ -151,7 +170,7 @@ convert_cols = {
 
 ### More Meaningful Names Used by the Charts
 
-```python
+```python title="day_names_order"
 # An ordered list of 'day' names to be used in some charts.
 day_names_order = [
     "Monday",
@@ -162,10 +181,18 @@ day_names_order = [
     "Saturday",
     "Sunday",
 ]
+```
 
+&nbsp;
+
+```python title="day_abbr_order"
 # Day name abbreviations for charts
 day_abbr_order = [d[0:3] for d in day_names_order]
+```
 
+&nbsp;
+
+```python title="month_names_order"
 # Month names in sequence
 month_names_order = [
     "January",
@@ -181,15 +208,18 @@ month_names_order = [
     "November",
     "December",
 ]
+```
 
+&nbsp;
+
+```python title="month_abbr_order"
 # Month name abbreviations for charts
 month_abbr_order = [m[0:3] for m in month_names_order]
-
 ```
 
 ### Chart Variables
 
-```python
+```python title="bar_colors"
 # Chart colors. 
 # These are the Matplotlib 'Tableau' color names.
 bar_colors = [
@@ -204,7 +234,11 @@ bar_colors = [
     "tab:olive",
     "tab:cyan",
 ]
+```
 
+&nbsp;
+
+```python title="base_colors"
 # Chart color codes
 base_colors = ["b", "g", "r", "c", "m", "y", "k", "w"]
 
@@ -225,7 +259,7 @@ The NYC collision data CSV file:
 
 Some of the data is cleaned and validated using dictionaries and lists defined earlier.
 
-```python
+```python title="pd.read_csv"
 collision_filename = "motor_vehicle_collisions_sep08_2023.csv"
 
 # Use the Pandas 'read_csv' function
@@ -240,7 +274,7 @@ crash = pd.read_csv(
 
 ### Rename some of the DataFrame columns
 
-```python
+```python title="cols_rename"
 # Save the original column names
 original_col_names = crash.columns.to_list()
 
@@ -251,15 +285,15 @@ print("Original Crash Column Names\n{}".format(original_col_names))
 print("\nRenamed Crash Columns Names\n{}".format(crash.columns.to_list()))
 ```
 
-### Original Crash Column Names
+&nbsp;
 
-```txt
+```txt title="Original column names"
 ['CRASH DATE', 'CRASH TIME', 'BOROUGH', 'ZIP CODE', 'LOCATION', 'ON STREET NAME', 'CROSS STREET NAME', 'OFF STREET NAME', 'NUMBER OF PERSONS INJURED', 'NUMBER OF PERSONS KILLED', 'NUMBER OF PEDESTRIANS INJURED', 'NUMBER OF PEDESTRIANS KILLED', 'NUMBER OF CYCLIST INJURED', 'NUMBER OF CYCLIST KILLED', 'NUMBER OF MOTORIST INJURED', 'NUMBER OF MOTORIST KILLED']
 ```
 
-### Renamed Crash Column Names
+&nbsp;
 
-```txt
+```txt title="New column names"
 ['DATE', 'TIME', 'BOROUGH', 'ZIP_CODE', 'LOCATION', 'ON_STREET_NAME', 'CROSS_STREET_NAME', 'OFF_STREET_NAME', 'NUM_PERSONS_INJURED', 'NUM_PERSONS_KILLED', 'NUM_PEDESTRIANS_INJURED', 'NUM_PEDESTRIANS_KILLED', 'NUM_CYCLISTS_INJURED', 'NUM_CYCLISTS_KILLED', 'NUM_MOTORISTS_INJURED', 'NUM_MOTORISTS_KILLED']
 ```
 
@@ -279,7 +313,7 @@ crash.shape
 
 ### An Overview of the Dataset
 
-```python
+```python title="crash.info()"
 crash.info()
 Index: 2023617 entries, 4455765 to 4631311
 Data columns (total 16 columns):
@@ -307,7 +341,7 @@ memory usage: 262.5+ MB
 
 ### The dataset in table format using 'describe()'
 
-```python
+```python title="pd.set_option"
 # 'set_option' is used to display numeric values as a 'float' rather
 # than the default 'scientific notation'
 pd.set_option("display.float_format", lambda x: "%8.2f" % x)
@@ -432,7 +466,7 @@ crash.describe()
 The original 'DATE' is a 'date only' field without the time.
 After merging the date and time columns, convert 'DATE' to a Python "datetime" object. Then remove the now unnecessary 'TIME' column.
 
-```python
+```python title="pd.to_datetime"
 # Merge
 crash["DATE"] = pd.to_datetime(crash["DATE"] + " " + crash["TIME"])
 # Remove the 'TIME' column
@@ -443,7 +477,7 @@ crash["DATE"] = pd.to_datetime(crash["DATE"])
 
 #### Some information about the 'DATE' column
 
-```python
+```python title="crash["DATE"].describe()"
 crash["DATE"].describe()
 count                          2023617
 mean     2017-05-20 19:34:04.983196928
@@ -460,7 +494,7 @@ Name: DATE, dtype: object
 
 #### Create 'start_date' and 'end_date' variables
 
-```python
+```python title="start_date and end_date"
 # 'start_date' and 'end_date' are used in the charts
 start_date = crash["DATE"].dt.date.min()
 end_date = crash["DATE"].dt.date.max()
@@ -481,13 +515,13 @@ Further investigation would be needed to confirm this.
 
 Replace empty 'BOROUGH' values with 'UNKNOWN'
 
-```python
+```python title="crash.fillna()"
 crash.fillna(value={"BOROUGH": "UNKNOWN"}, inplace=True)
 ```
 
 ### The 'BOROUGH' Column
 
-```python
+```python title="describe()"
 crash["BOROUGH"].describe()
 count     2023617
 unique          6
@@ -501,7 +535,7 @@ Name: BOROUGH, dtype: object
 - **top** - 'UNKNOWN' is the most frequent borough recorded
 - **freq** - There are 629528 occurrances of the 'UNKNOWN' borough
 
-```python
+```python title="unique()"
 # Display the unique borough names 
 crash['BOROUGH'].unique()
 array(['UNKNOWN', 'BROOKLYN', 'BRONX', 'MANHATTAN', 'QUEENS', 'STATEN ISLAND'], dtype=object)
@@ -509,7 +543,7 @@ array(['UNKNOWN', 'BROOKLYN', 'BRONX', 'MANHATTAN', 'QUEENS', 'STATEN ISLAND'], 
 
 ### The 'ZIP_CODE' Column
 
-```python
+```python title="fillna()"
 # Replace empty ZIP_CODE's with 'UNKNOWN'
 crash.fillna(value={'ZIP_CODE': 'UNKNOWN'}, inplace=True)
 ```
@@ -535,7 +569,7 @@ Name: ZIP_CODE, dtype: object
 
 ### matplotlib.pyplot Chart of Crash Injuries by Borough
 
-```python
+```python title="Pandas grouping."
 persons_injured_by_borough = crash.groupby(by=["BOROUGH"])["NUM_PERSONS_INJURED"].sum()
 boroughs = persons_injured_by_borough.index
 
@@ -555,9 +589,9 @@ plt.show()
 
 ![png](src/assets/traffic/crash_time_period_stats_files/00_crash_time_period_stats_32_0.png)
 
-### matplotlib.pyplot Chart of Crash Deaths by Borough
+### Chart of Crash Deaths by Borough
 
-```python
+```python title="matplotlib.pyplot chart"
 persons_killed_by_borough = crash.groupby(by=["BOROUGH"])["NUM_PERSONS_KILLED"].sum()
 
 boroughs = persons_killed_by_borough.index
@@ -577,7 +611,7 @@ plt.show()
 
 ![png](src/assets/traffic/crash_time_period_stats_files/00_crash_time_period_stats_33_0.png)
 
-### Borough Chart Results
+#### Borough Chart Results
 
 Brooklyn leads the city in crash deaths and injuries.
 The "UNKNOWN" borough has is the highest total overall. Unfortunately, we don't know where those collisions should be. We could guess that they occured on one of the many bridges and expressways across NYC.
@@ -587,7 +621,7 @@ A future project may be to find the borough based on the 'ZIP_CODE', 'LOCATION' 
 
 New Columns: **YEAR**, **MONTH_NAME**, **DAY_NAME** and **HOUR**
 
-```python
+```python title="Custom time periods."
 # Extract information from the DATE column
 crash["YEAR"] = crash["DATE"].dt.year
 
@@ -616,9 +650,7 @@ print("Month abbreviations: {}\n".format(crash.MONTH_NAME.unique()))
 print("Hour order: {}\n".format(hour_order))
 ```
 
-Output:
-
-```bash
+```bash title="Output"
  Year, Month and Hour order lists will be used for charting.
  Year order: [2013 2014 2015 2016 2017 2018 2019 2020 2021 2022 2023]
  
@@ -631,7 +663,7 @@ Output:
   
 An overview of the total deaths and injuries on NYC streets.
 
-```python
+```python title="crash_by_year_killed  crash_by_year_injured"
 # These two variables will be used later on also
 crash_by_year_killed = (
     crash.groupby("YEAR")["NUM_PERSONS_KILLED"].sum().sort_values(ascending=False)
@@ -646,9 +678,9 @@ print("\n5 Worst Years for Collision Injuries")
 print(crash_by_year_injured.head(5))
 ```
 
-Output:
+&nbsp;
 
-```bash
+```bash title="Output"
     5 Worst Years for Collision Deaths
     YEAR
     2013    297
