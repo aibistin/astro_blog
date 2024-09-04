@@ -9,7 +9,7 @@ const MAX_POSTS = 10;
 const allPosts = await getAllPosts();
 const latestPosts = sortMDByDate(allPosts).slice(0, MAX_POSTS);
 
-const cactusTech: { desc: string; href: string; icon: string; title: string}[] = [
+const cactusTech: { desc: string; href: string; icon: string; title: string }[] = [
 	{
 		desc: "Build anything, faster.",
 		href: "https://www.perl.org",
@@ -98,11 +98,13 @@ const cactusTech: { desc: string; href: string; icon: string; title: string}[] =
 			{
 				latestPosts.map((p) => (
 					<li>
+						{/* @ts-expect-error */}
 						<PostPreview post={p} />
 					</li>
 				))
 			}
 		</ul>
+
 		{/* Optional CTA to view all posts */}
 		<!-- <a href="/posts" class="cta-button">View All Posts</a> -->
 		<div class="mt-6">

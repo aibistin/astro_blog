@@ -2,9 +2,8 @@
 title: "Upload and Email a photo with Dancer2 and Bootstrap"
 publishDate: "06 April 2013"
 description: "Using Perl and Dancer2 to upload and email a phtograph."
+slug: upload-photo-perl-dancer-bootstrap
 tags: [ "bootstrap", "email", "dancer", "perl", "ssmtp", "template::toolkit", "webDev" ]
-ogImage: "/social-card.png"
-assets_dir: "src/assets/"
 draft: false
 ---
 ## Upload and Email a photo using Dancer2 with Twitter Bootstrap

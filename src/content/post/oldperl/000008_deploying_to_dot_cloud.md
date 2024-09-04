@@ -2,9 +2,8 @@
 title: "Deploying A Perl Application to dotCloud"
 publishDate: "24 August 2013"
 description: "Deploying My Perl Application to dotCloud. Now known as Docker"
+slug: deploying-to-dot-cloud
 tags: [ "perl", "dotCloud", "dancer", "docker"]
-ogImage: "/social-card.png"
-assets_dir: "src/assets/"
 draft: false
 ---
 

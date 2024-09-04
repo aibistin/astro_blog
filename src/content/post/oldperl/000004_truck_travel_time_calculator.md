@@ -2,9 +2,8 @@
 title: "Truck Travel Time Calculator"
 publishDate: "25 August 2013"
 description: "Truck Travel Time Calculator with Perl and Google Travel Time Matrix"
+slug: truck-traveltime-calculator-perl-google-matrix 
 tags: [ "perl", "ajax", "google", "javascript", "jQuery", "dancer", "traveltime"]
-ogImage: "/social-card.png"
-assets_dir: "src/assets/"
 draft: false
 ---
 

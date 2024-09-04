@@ -1,4 +1,4 @@
-export interface  SiteConfig {
+export interface SiteConfig {
 	author: string;
 	date: {
 		locale: string | string[] | undefined;
