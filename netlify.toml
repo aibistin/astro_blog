@@ -1,2 +1,2 @@
 [build]
-  command = 'npm run prod_build'
+  command = 'npm run prod_build && pagefind --site dist'

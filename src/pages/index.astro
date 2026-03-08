@@ -64,18 +64,6 @@ const cactusTech: { desc: string; href: string; icon: string; title: string }[] 
 		icon: "skill-icons:sqlite",
 		title: "SQLite",
 	},
-	// {
-	// 	desc: "An easy to use Icon component for Astro.",
-	// 	href: "https://github.com/natemoo-re/astro-icon#readme",
-	// 	title: "Astro Icon",
-	// 	icon: "skill-icons:github-light",
-	// },
-	// {
-	// 	desc: "Highly customisable source code & syntax highlighter",
-	// 	href: "https://expressive-code.com/",
-	// 	title: "Expressive Code",
-	// 	icon: "skill-icons:astro",
-	// },
 ];
 ---
 
@@ -98,15 +86,13 @@ const cactusTech: { desc: string; href: string; icon: string; title: string }[] 
 			{
 				latestPosts.map((p) => (
 					<li>
-						{/* @ts-expect-error */}
+						{/* @ts-expect-error -- CollectionEntry inference mismatch between getAllPosts() return type and PostPreview prop type */}
 						<PostPreview post={p} />
 					</li>
 				))
 			}
 		</ul>
 
-		{/* Optional CTA to view all posts */}
-		<!-- <a href="/posts" class="cta-button">View All Posts</a> -->
 		<div class="mt-6">
 			<a
 				class="cta-button textColor mr-6 flex items-center rounded bg-bgColor font-bold shadow-sm transition duration-300 hover:text-accent hover:shadow-md"

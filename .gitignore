@@ -33,3 +33,6 @@ my_utils
 # Local Netlify folder
 .netlify
 src/content/post/wip/
+CLAUDE.md
+docs/plan_of_action.md
+docs/docker_instructions.txt

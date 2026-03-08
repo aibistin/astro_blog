@@ -24,7 +24,8 @@ export const siteConfig: SiteConfig = {
 	title: "Code Blog",
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	webmentions: {
-		link: "https://webmention.io/astro-cactus.chriswilliams.dev/webmention",
+		link: "https://webmention.io/aibistin.com/webmention",
+		pingback: "https://webmention.io/aibistin.com/xmlrpc",
 	},
 };
 

@@ -26,6 +26,11 @@ module.exports = {
 				parser: "@typescript-eslint/parser",
 			},
 			rules: {
+				// interface Props is the Astro convention for component prop types; suppress unused-vars for it
+				"@typescript-eslint/no-unused-vars": [
+					"warn",
+					{ ignoreRestSiblings: true, varsIgnorePattern: "Props" },
+				],
 				"astro/jsx-a11y/no-redundant-roles": [
 					"error",
 					{
@@ -58,10 +63,7 @@ module.exports = {
 	plugins: ["@typescript-eslint", "astro", "perfectionist", "regexp", "typescript-sort-keys"],
 	root: true,
 	rules: {
-		"@typescript-eslint/no-unused-vars": [
-			"warn",
-			{ ignoreRestSiblings: true, varsIgnorePattern: "Props" },
-		],
+		"@typescript-eslint/no-unused-vars": ["warn", { ignoreRestSiblings: true }],
 		"@typescript-eslint/no-var-requires": "warn",
 	},
 };

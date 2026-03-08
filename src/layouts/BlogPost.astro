@@ -2,7 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 
 import BlogHero from "@/components/blog/Hero.astro";
-// import TOC from "@/components/blog/TOC.astro";
+import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
 
 import BaseLayout from "./Base.astro";
@@ -18,29 +18,22 @@ const {
 } = post;
 const socialImage = ogImage ?? `/og-image/${slug}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-// const { headings } = await post.render();
+const { headings } = await post.render();
 ---
 
 <BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
-	<!-- <div class="gap-x-2 lg:flex lg:items-start"> -->
-	<div class="flex justify-center"></div>
-	<!-- <div class="gap-x-10 lg:flex lg:items-start"> -->
-	<!-- {!!headings.length && <TOC headings={headings} />} -->
-	<article class="w-full max-w-[140%] break-words" data-pagefind-body>
-		<!-- <article class="flex-grow break-words" data-pagefind-body> -->
-		<div id="blog-hero"><BlogHero content={post} /></div>
-		<!-- <div 
-			class="prose prose-sm prose-cactus mt-12 prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
-		>
--->
-		<div
-			class="prose prose-sm prose-cactus mx-auto mt-12 w-full max-w-[140%] prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
-		>
-			<slot />
-			<WebMentions />
-			<!-- <HelpfulLinks /> -->
-		</div>
-	</article>
+	<div class="gap-x-10 lg:flex lg:items-start">
+		{!!headings.length && <TOC headings={headings} />}
+		<article class="flex-grow break-words" data-pagefind-body>
+			<div id="blog-hero"><BlogHero content={post} /></div>
+			<div
+				class="prose prose-sm prose-cactus mx-auto mt-12 w-full max-w-full prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
+			>
+				<slot />
+				<WebMentions />
+			</div>
+		</article>
+	</div>
 
 	<button
 		aria-label="Back to Top"

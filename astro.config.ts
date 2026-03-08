@@ -45,8 +45,7 @@ export default defineConfig({
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
-	// ! Please remember to replace the following site property with your own domain
-	site: "https://aibistin.com/",
+	site: process.env.SITE_URL ?? "https://aibistin.com/",
 	vite: {
 		build: {
 			rollupOptions: {
@@ -60,7 +59,7 @@ export default defineConfig({
 function rawFonts(ext: string[]) {
 	return {
 		name: "vite-plugin-raw-fonts",
-		// @ts-expect-error:next-line
+		// @ts-expect-error -- Vite transform plugin type does not include the id parameter in its upstream types
 		transform(_, id) {
 			// eslint-disable-next-line
 			if (ext.some((e) => id.endsWith(e))) {
