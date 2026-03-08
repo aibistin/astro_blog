@@ -1,12 +1,24 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
+/* Use data-theme="dark" attribute on <html> for dark: utilities */
+@variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* Custom color tokens — inline so opacity modifiers work correctly */
+@theme inline {
+	--color-accent: hsl(var(--theme-accent));
+	--color-accent-2: hsl(var(--theme-accent-2));
+	--color-bgColor: hsl(var(--theme-bg));
+	--color-link: hsl(var(--theme-link));
+	--color-quote: hsl(var(--theme-quote));
+	--color-textColor: hsl(var(--theme-text));
+}
+
+/* Light / dark CSS variable values */
 @layer base {
 	:root,
 	:root[data-theme="light"] {
 		color-scheme: light;
-		/* https://tailwindcss.com/docs/customizing-colors#using-css-variables */
 		--theme-bg: 0deg 0% 98%;
 		--theme-link: 172deg 18% 41%;
 		--theme-text: 203deg 11% 15%;
@@ -31,5 +43,99 @@
 
 	body {
 		@apply mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+	}
+}
+
+/* Custom component classes */
+@layer components {
+	.cactus-link {
+		@apply underline underline-offset-2;
+		&:hover {
+			@apply decoration-link decoration-2;
+		}
+	}
+
+	.title {
+		@apply text-2xl font-semibold text-accent-2;
+	}
+}
+
+/* Prose element overrides (replaces typography.DEFAULT from tailwind.config.ts) */
+@layer components {
+	.prose a {
+		@apply underline underline-offset-2;
+		&:hover {
+			@apply decoration-link decoration-2;
+		}
+	}
+
+	.prose blockquote {
+		border-left-width: 0;
+	}
+
+	.prose code {
+		border: 1px dotted #666;
+		border-radius: 2px;
+	}
+
+	.prose hr {
+		border-top-style: dashed;
+	}
+
+	.prose strong {
+		font-weight: 700;
+	}
+
+	.prose sup {
+		@apply ms-0.5;
+	}
+
+	.prose sup a {
+		@apply bg-none;
+		&::before {
+			content: "[";
+		}
+		&::after {
+			content: "]";
+		}
+		&:hover {
+			@apply text-link no-underline;
+		}
+	}
+
+	.prose tbody tr {
+		border-bottom-width: 0;
+	}
+
+	.prose tfoot {
+		border-top: 1px dashed #666;
+	}
+
+	.prose thead {
+		border-bottom-width: 0;
+	}
+
+	.prose thead th {
+		border-bottom: 1px dashed #666;
+		font-weight: 700;
+	}
+
+	.prose-sm code {
+		font-size: 0.875rem;
+		font-weight: 400;
+	}
+}
+
+/* prose-cactus: custom colour overrides for the cactus typography theme */
+@layer utilities {
+	.prose-cactus {
+		--tw-prose-body: hsl(var(--theme-text));
+		--tw-prose-bold: hsl(var(--theme-text));
+		--tw-prose-bullets: hsl(var(--theme-text));
+		--tw-prose-code: hsl(var(--theme-text));
+		--tw-prose-headings: hsl(var(--theme-accent-2));
+		--tw-prose-links: hsl(var(--theme-text));
+		--tw-prose-quotes: hsl(var(--theme-quote));
+		--tw-prose-th-borders: #666;
 	}
 }
