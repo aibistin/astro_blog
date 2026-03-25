@@ -78,6 +78,11 @@
 		border-left-width: 0;
 	}
 
+	/* Offset heading anchors so TOC jump links don't land under the sticky header */
+	.prose :is(h1, h2, h3, h4, h5, h6) {
+		scroll-margin-top: 5rem;
+	}
+
 	.prose code {
 		border: 1px dotted #666;
 		border-radius: 2px;

@@ -10,9 +10,11 @@ import BaseLayout from "./Base.astro";
 
 interface Props {
 	post: CollectionEntry<"post">;
+	nextPost?: CollectionEntry<"post">; // newer post
+	prevPost?: CollectionEntry<"post">; // older post
 }
 
-const { post } = Astro.props;
+const { post, nextPost, prevPost } = Astro.props;
 const {
 	data: { description, ogImage, publishDate, title, updatedDate },
 	slug,
@@ -49,6 +51,37 @@ const { headings } = await post.render();
 				<slot />
 				<WebMentions />
 			</div>
+			{
+				(prevPost || nextPost) && (
+					<nav
+						aria-label="Post navigation"
+						class="mt-12 flex flex-col gap-4 border-t border-textColor/10 pt-6 text-sm sm:flex-row sm:justify-between"
+					>
+						{prevPost ? (
+							<a
+								class="group flex max-w-xs flex-col gap-1 hover:text-accent"
+								data-astro-prefetch
+								href={`/posts/${prevPost.slug}/`}
+							>
+								<span class="text-textColor/50">← Older</span>
+								<span class="font-medium group-hover:underline">{prevPost.data.title}</span>
+							</a>
+						) : (
+							<span />
+						)}
+						{nextPost && (
+							<a
+								class="group flex max-w-xs flex-col gap-1 text-right hover:text-accent sm:items-end"
+								data-astro-prefetch
+								href={`/posts/${nextPost.slug}/`}
+							>
+								<span class="text-textColor/50">Newer →</span>
+								<span class="font-medium group-hover:underline">{nextPost.data.title}</span>
+							</a>
+						)}
+					</nav>
+				)
+			}
 		</article>
 		{!!headings.length && <TOC headings={headings} />}
 	</div>
