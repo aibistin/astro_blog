@@ -85,7 +85,7 @@ const cactusTech: { desc: string; href: string; icon: string; title: string }[] 
 		<ul class="grid grid-cols-1 gap-4 md:grid-cols-2">
 			{
 				latestPosts.map((p) => (
-					<li>
+					<li class="rounded-md border border-textColor/10 p-4 transition-shadow duration-200 hover:border-accent/30 hover:shadow-sm">
 						{/* @ts-expect-error -- CollectionEntry inference mismatch between getAllPosts() return type and PostPreview prop type */}
 						<PostPreview post={p} />
 					</li>

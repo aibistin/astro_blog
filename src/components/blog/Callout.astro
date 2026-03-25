@@ -1,0 +1,55 @@
+---
+type CalloutType = "tldr" | "tip" | "warning" | "info";
+
+interface Props {
+	type?: CalloutType;
+}
+
+const { type = "info" } = Astro.props;
+
+/* All class strings are literals so Tailwind's scanner can detect them */
+const variants: Record<CalloutType, { label: string; icon: string; border: string; bg: string; labelClass: string }> = {
+	tldr: {
+		label: "TL;DR",
+		icon: "⚡",
+		border: "border-accent",
+		bg: "bg-accent/5",
+		labelClass: "text-accent",
+	},
+	tip: {
+		label: "Tip",
+		icon: "💡",
+		border: "border-link",
+		bg: "bg-link/5",
+		labelClass: "text-link",
+	},
+	warning: {
+		label: "Warning",
+		icon: "⚠️",
+		border: "border-yellow-500",
+		bg: "bg-yellow-500/10",
+		labelClass: "text-yellow-700 dark:text-yellow-400",
+	},
+	info: {
+		label: "Note",
+		icon: "ℹ️",
+		border: "border-textColor/30",
+		bg: "bg-textColor/5",
+		labelClass: "text-textColor",
+	},
+};
+
+const { label, icon, border, bg, labelClass } = variants[type];
+---
+
+<aside
+	class:list={["not-prose my-6 rounded-r-md border-l-4 px-4 py-3", border, bg]}
+	role="note"
+>
+	<p class:list={["mb-1 text-sm font-semibold", labelClass]}>
+		<span aria-hidden="true">{icon} </span>{label}
+	</p>
+	<div class="text-sm text-textColor">
+		<slot />
+	</div>
+</aside>

@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 
 import BlogHero from "@/components/blog/Hero.astro";
+import PostSidebar from "@/components/blog/PostSidebar.astro";
 import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
 
@@ -22,17 +23,34 @@ const { headings } = await post.render();
 ---
 
 <BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
-	<div class="gap-x-10 lg:flex lg:items-start">
-		{!!headings.length && <TOC headings={headings} />}
-		<article class="flex-grow break-words" data-pagefind-body>
+	<!-- Reading progress bar: fills left-to-right as the user scrolls through the post -->
+	<reading-progress>
+		<div
+			aria-hidden="true"
+			class="fixed left-0 top-0 z-[60] h-[3px] w-0 bg-accent"
+			id="reading-progress-bar"
+		></div>
+	</reading-progress>
+
+	<div
+		class:list={[
+			"gap-x-6 lg:grid",
+			headings.length
+				? "lg:grid-cols-[14rem_minmax(0,1fr)_16rem]"
+				: "lg:grid-cols-[14rem_minmax(0,1fr)]",
+		]}
+	>
+		<PostSidebar />
+		<article class="min-w-0 break-words" data-pagefind-body>
 			<div id="blog-hero"><BlogHero content={post} /></div>
 			<div
-				class="prose prose-sm prose-cactus mx-auto mt-12 w-full max-w-full prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
+				class="prose prose-cactus mx-auto mt-12 w-full max-w-full font-sans leading-relaxed prose-headings:font-semibold prose-headings:text-accent-2 prose-headings:before:absolute prose-headings:before:-ms-4 prose-headings:before:text-accent prose-headings:before:content-['#'] prose-th:before:content-none"
 			>
 				<slot />
 				<WebMentions />
 			</div>
 		</article>
+		{!!headings.length && <TOC headings={headings} />}
 	</div>
 
 	<button
@@ -53,6 +71,26 @@ const { headings } = await post.render();
 			<path d="M4.5 15.75l7.5-7.5 7.5 7.5" stroke-linecap="round" stroke-linejoin="round"></path>
 		</svg>
 	</button>
+
+	<script>
+		class ReadingProgress extends HTMLElement {
+			connectedCallback() {
+				const bar = document.getElementById("reading-progress-bar") as HTMLDivElement;
+				if (!bar) return;
+
+				function updateProgress() {
+					const scrollTop = document.documentElement.scrollTop;
+					const docHeight =
+						document.documentElement.scrollHeight - document.documentElement.clientHeight;
+					bar.style.width = docHeight > 0 ? `${(scrollTop / docHeight) * 100}%` : "0%";
+				}
+
+				document.addEventListener("scroll", updateProgress, { passive: true });
+				updateProgress();
+			}
+		}
+		customElements.define("reading-progress", ReadingProgress);
+	</script>
 
 	<script>
 		const scrollBtn = document.getElementById("to-top-btn") as HTMLButtonElement;

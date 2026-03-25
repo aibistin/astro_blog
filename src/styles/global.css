@@ -19,22 +19,22 @@
 	:root,
 	:root[data-theme="light"] {
 		color-scheme: light;
-		--theme-bg: 0deg 0% 98%;
-		--theme-link: 172deg 18% 41%;
-		--theme-text: 203deg 11% 15%;
-		--theme-accent: 351deg 66% 48%;
-		--theme-accent-2: 0deg 0% 7%;
-		--theme-quote: 351deg 66% 48%;
+		--theme-bg: 0deg 0% 96%;      /* #f6f6f6 Guardian off-white */
+		--theme-link: 199deg 100% 36%; /* #0077b6 Guardian blue */
+		--theme-text: 0deg 0% 20%;    /* #333333 Guardian dark grey */
+		--theme-accent: 0deg 100% 39%; /* #c70000 Guardian red */
+		--theme-accent-2: 217deg 92% 20%; /* #052962 Guardian navy */
+		--theme-quote: 204deg 100% 19%; /* #003c60 Guardian dark blue */
 	}
 
 	:root[data-theme="dark"] {
 		color-scheme: dark;
-		--theme-bg: 210deg 6% 12%;
-		--theme-link: 330deg 49% 67%;
-		--theme-text: 220deg 3% 79%;
-		--theme-accent: 159deg 64% 45%;
-		--theme-accent-2: 0deg 0% 93%;
-		--theme-quote: 102deg 100% 86%;
+		--theme-bg: 0deg 0% 7%;       /* #121212 Guardian near-black */
+		--theme-link: 214deg 28% 44%; /* #506991 Guardian slate blue */
+		--theme-text: 0deg 0% 73%;    /* #bababa Guardian light grey */
+		--theme-accent: 53deg 100% 50%; /* #ffe500 Guardian yellow */
+		--theme-accent-2: 0deg 0% 86%; /* #dcdcdc Guardian light grey heading */
+		--theme-quote: 0deg 0% 60%;   /* #999999 Guardian mid grey */
 	}
 
 	html {
@@ -42,7 +42,7 @@
 	}
 
 	body {
-		@apply mx-auto flex min-h-screen max-w-3xl flex-col bg-bgColor px-8 pt-16 font-mono text-sm font-normal text-textColor antialiased;
+		@apply mx-auto flex min-h-screen max-w-6xl flex-col bg-bgColor px-8 pt-16 font-mono text-base font-normal text-textColor antialiased;
 	}
 }
 
@@ -57,6 +57,11 @@
 
 	.title {
 		@apply text-2xl font-semibold text-accent-2;
+	}
+
+	/* Highlight the active nav link using the aria-current attribute already set by Header.astro */
+	nav a[aria-current="page"] {
+		@apply font-semibold text-accent;
 	}
 }
 

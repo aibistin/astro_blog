@@ -8,12 +8,16 @@ My personal code blog at [aibistin.com](https://aibistin.com).
 
 - **Astro 5** static site generation
 - **Tailwind CSS 4** — CSS-first configuration, no config file
-- **MDX** posts with Expressive Code syntax highlighting (solarized dark/light)
+- **Guardian colour scheme** — navy headings, Guardian red/yellow accents, off-white/near-black backgrounds
+- **MDX** posts with Expressive Code syntax highlighting (github-dark / github-light)
 - **Dark/light mode** with `localStorage` persistence
-- **Pagefind** static search
+- **Sticky header** — Search and theme toggle always accessible while reading
+- **3-column post layout** — left sidebar (recent posts + tags), article, table of contents
+- **Reading progress bar** on post pages
+- **Callout MDX component** (`tldr`, `tip`, `warning`, `info`) for post authors
+- **Pagefind** static search (keyboard shortcut: `/`)
 - **Auto-generated OG images** via Satori
 - **RSS feed**, sitemap, and webmentions
-- **Table of contents** on posts with headings
 
 ## Commands
 
@@ -32,6 +36,8 @@ Search (`pagefind --site dist`) runs automatically after `npm run build` via the
 ## Configure
 
 Edit `src/site.config.ts` to change the site title, author, description, date locale, nav links, and Expressive Code theme.
+
+Edit the `--theme-*` CSS variables in `src/styles/global.css` to change the colour scheme.
 
 ## Adding Posts
 

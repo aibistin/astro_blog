@@ -43,6 +43,10 @@ export const menuLinks: { path: string; title: string }[] = [
 		path: "/posts/",
 		title: "Blog",
 	},
+	{
+		path: "/tags/",
+		title: "Tags",
+	},
 ];
 
 // https://expressive-code.com/reference/configuration/
@@ -71,7 +75,7 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 		return `[data-theme="${theme.name}"]`;
 	},
 	// One dark, one light theme => https://expressive-code.com/guides/themes/#available-themes
-	// themes: ["dracula", "github-light"],
-	themes: ["solarized-dark", "solarized-light"],
+	// github-dark/github-light complement the Guardian colour palette
+	themes: ["github-dark", "github-light"],
 	useThemedScrollbars: true,
 };

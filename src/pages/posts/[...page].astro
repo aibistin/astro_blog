@@ -51,7 +51,7 @@ const paginationProps = {
 			<ul class="space-y-8 text-start">
 				{
 					page.data.map((p) => (
-						<li class="flex flex-col flex-wrap gap-4 sm:flex-row [&_q]:basis-full">
+						<li class="flex flex-col flex-wrap gap-4 rounded-md border border-textColor/10 p-4 transition-shadow duration-200 hover:border-accent/30 hover:shadow-sm sm:flex-row [&_q]:basis-full">
 							{" "}
 							{/* Increased gap */}
 							<PostPreview as="h2" post={p} withDesc />
