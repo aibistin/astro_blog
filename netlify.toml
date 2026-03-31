@@ -1,2 +1,5 @@
 [build]
-  command = 'npm run prod_build && pagefind --site dist'
+  command = 'pnpm run prod_build && pagefind --site dist'
+
+[build.environment]
+  NODE_VERSION = "20"
