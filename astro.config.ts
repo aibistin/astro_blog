@@ -1,9 +1,9 @@
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "astro/config";
 import expressiveCode from "astro-expressive-code";
 import icon from "astro-icon";
-import tailwindcss from "@tailwindcss/vite";
 import fs from "fs";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkUnwrapImages from "remark-unwrap-images";
@@ -16,12 +16,7 @@ export default defineConfig({
 	image: {
 		domains: ["webmention.io"],
 	},
-	integrations: [
-		expressiveCode(expressiveCodeOptions),
-		icon(),
-		sitemap(),
-		mdx(),
-	],
+	integrations: [expressiveCode(expressiveCodeOptions), icon(), sitemap(), mdx()],
 	markdown: {
 		rehypePlugins: [
 			[

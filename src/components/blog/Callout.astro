@@ -1,5 +1,5 @@
 ---
-type CalloutType = "tldr" | "tip" | "warning" | "info";
+type CalloutType = "info" | "tip" | "tldr" | "warning";
 
 interface Props {
 	type?: CalloutType;
@@ -8,48 +8,48 @@ interface Props {
 const { type = "info" } = Astro.props;
 
 /* All class strings are literals so Tailwind's scanner can detect them */
-const variants: Record<CalloutType, { label: string; icon: string; border: string; bg: string; labelClass: string }> = {
-	tldr: {
-		label: "TL;DR",
-		icon: "⚡",
-		border: "border-accent",
-		bg: "bg-accent/5",
-		labelClass: "text-accent",
+const variants: Record<
+	CalloutType,
+	{ bg: string; border: string; icon: string; label: string; labelClass: string }
+> = {
+	info: {
+		bg: "bg-textColor/5",
+		border: "border-textColor/30",
+		icon: "ℹ️",
+		label: "Note",
+		labelClass: "text-textColor",
 	},
 	tip: {
-		label: "Tip",
-		icon: "💡",
-		border: "border-link",
 		bg: "bg-link/5",
+		border: "border-link",
+		icon: "💡",
+		label: "Tip",
 		labelClass: "text-link",
 	},
-	warning: {
-		label: "Warning",
-		icon: "⚠️",
-		border: "border-yellow-500",
-		bg: "bg-yellow-500/10",
-		labelClass: "text-yellow-700 dark:text-yellow-400",
+	tldr: {
+		bg: "bg-accent/5",
+		border: "border-accent",
+		icon: "⚡",
+		label: "TL;DR",
+		labelClass: "text-accent",
 	},
-	info: {
-		label: "Note",
-		icon: "ℹ️",
-		border: "border-textColor/30",
-		bg: "bg-textColor/5",
-		labelClass: "text-textColor",
+	warning: {
+		bg: "bg-yellow-500/10",
+		border: "border-yellow-500",
+		icon: "⚠️",
+		label: "Warning",
+		labelClass: "text-yellow-700 dark:text-yellow-400",
 	},
 };
 
-const { label, icon, border, bg, labelClass } = variants[type];
+const { bg, border, icon, label, labelClass } = variants[type];
 ---
 
-<aside
-	class:list={["not-prose my-6 rounded-r-md border-l-4 px-4 py-3", border, bg]}
-	role="note"
->
+<aside class:list={["not-prose my-6 rounded-r-md border-l-4 px-4 py-3", border, bg]} role="note">
 	<p class:list={["mb-1 text-sm font-semibold", labelClass]}>
 		<span aria-hidden="true">{icon} </span>{label}
 	</p>
-	<div class="text-sm text-textColor">
+	<div class="text-textColor text-sm">
 		<slot />
 	</div>
 </aside>
