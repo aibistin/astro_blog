@@ -25,7 +25,12 @@ export function generateToc(headings: ReadonlyArray<MarkdownHeading>) {
 		if (heading.depth === 2) {
 			toc.push(heading);
 		} else {
-			const lastItemInToc = toc[toc.length - 1]!;
+			const lastItemInToc = toc.at(-1);
+			// a post may open with an h3+ before any h2 — treat it as top-level
+			if (!lastItemInToc) {
+				toc.push(heading);
+				return;
+			}
 			if (heading.depth < lastItemInToc.depth) {
 				throw new Error(`Orphan heading found: ${heading.text}.`);
 			}

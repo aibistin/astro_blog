@@ -1,11 +1,26 @@
 import { siteConfig } from "@/site-config";
 import { type CollectionEntry, getCollection } from "astro:content";
 
-/** filter out draft posts based on the environment */
-export async function getAllPosts() {
+/** filter out draft posts based on the environment (overridable for tests) */
+export async function getAllPosts(isProd = import.meta.env.PROD) {
 	return await getCollection("post", ({ data }) => {
-		return import.meta.env.PROD ? !data.draft : true;
+		return isProd ? !data.draft : true;
 	});
+}
+
+/** all posts, drafts filtered in prod, sorted newest first */
+export async function getSortedPosts() {
+	return sortMDByDate(await getAllPosts());
+}
+
+/** canonical path for a post — single source of truth for the /posts/ URL shape */
+export function getPostUrl(post: CollectionEntry<"post">) {
+	return `/posts/${post.id}/`;
+}
+
+/** the date shown to readers: the last update if there is one, else the publish date */
+export function getPostDisplayDate(post: CollectionEntry<"post">) {
+	return post.data.updatedDate ?? post.data.publishDate;
 }
 
 /** returns the date of the post based on option in siteConfig.sortPostsByUpdatedDate */

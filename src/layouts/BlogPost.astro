@@ -1,10 +1,11 @@
 ---
-import type { CollectionEntry } from "astro:content";
+import { type CollectionEntry, render } from "astro:content";
 
 import BlogHero from "@/components/blog/Hero.astro";
 import PostSidebar from "@/components/blog/PostSidebar.astro";
 import TOC from "@/components/blog/TOC.astro";
 import WebMentions from "@/components/blog/webmentions/index.astro";
+import { getPostUrl } from "@/data/post";
 
 import BaseLayout from "./Base.astro";
 
@@ -17,11 +18,11 @@ interface Props {
 const { nextPost, post, prevPost } = Astro.props;
 const {
 	data: { description, ogImage, publishDate, title, updatedDate },
-	slug,
+	id,
 } = post;
-const socialImage = ogImage ?? `/og-image/${slug}.png`;
+const socialImage = ogImage ?? `/og-image/${id}.png`;
 const articleDate = updatedDate?.toISOString() ?? publishDate.toISOString();
-const { headings } = await post.render();
+const { headings } = await render(post);
 ---
 
 <BaseLayout meta={{ articleDate, description, ogImage: socialImage, title }}>
@@ -63,7 +64,7 @@ const { headings } = await post.render();
 							<a
 								class="group hover:text-accent flex max-w-xs flex-col gap-1"
 								data-astro-prefetch
-								href={`/posts/${prevPost.slug}/`}
+								href={getPostUrl(prevPost)}
 							>
 								<span class="text-textColor/50">← Older</span>
 								<span class="font-medium group-hover:underline">{prevPost.data.title}</span>
@@ -75,7 +76,7 @@ const { headings } = await post.render();
 							<a
 								class="group hover:text-accent flex max-w-xs flex-col gap-1 text-right sm:items-end"
 								data-astro-prefetch
-								href={`/posts/${nextPost.slug}/`}
+								href={getPostUrl(nextPost)}
 							>
 								<span class="text-textColor/50">Newer →</span>
 								<span class="font-medium group-hover:underline">{nextPost.data.title}</span>

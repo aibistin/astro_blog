@@ -36,3 +36,7 @@ src/content/post/wip/
 CLAUDE.md
 docs/
 paad/
+
+# test coverage output
+coverage/
+src/content/post/

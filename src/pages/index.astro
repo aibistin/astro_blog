@@ -2,12 +2,11 @@
 import SocialList from "@/components/SocialList.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
-import { getAllPosts, sortMDByDate } from "@/data/post";
+import { getSortedPosts } from "@/data/post";
 import { Icon } from "astro-icon/components";
 
 const MAX_POSTS = 10;
-const allPosts = await getAllPosts();
-const latestPosts = sortMDByDate(allPosts).slice(0, MAX_POSTS);
+const latestPosts = (await getSortedPosts()).slice(0, MAX_POSTS);
 
 const cactusTech: { desc: string; href: string; icon: string; title: string }[] = [
 	{
@@ -95,7 +94,7 @@ const cactusTech: { desc: string; href: string; icon: string; title: string }[] 
 		<div class="mt-6">
 			<a
 				class="cta-button textColor mr-6 flex items-center rounded bg-bgColor font-bold shadow-sm transition duration-300 hover:text-accent hover:shadow-md"
-				href="/posts"
+				href="/posts/"
 			>
 				<Icon name="mdi:arrow-right" />View All Posts</a
 			>

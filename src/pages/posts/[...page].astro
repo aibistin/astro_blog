@@ -5,12 +5,12 @@ import type { CollectionEntry } from "astro:content";
 import Pagination from "@/components/Paginator.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
 import PageLayout from "@/layouts/Base.astro";
-import { getAllPosts, getUniqueTags, sortMDByDate } from "@/data/post";
+import { getSortedPosts, getUniqueTags } from "@/data/post";
+import { buildPaginationProps } from "@/utils";
 
 export const getStaticPaths = (async ({ paginate }) => {
-	const allPosts = await getAllPosts();
-	const allPostsByDate = sortMDByDate(allPosts);
-	const uniqueTags = getUniqueTags(allPosts);
+	const allPostsByDate = await getSortedPosts();
+	const uniqueTags = getUniqueTags(allPostsByDate);
 	return paginate(allPostsByDate, { pageSize: 10, props: { uniqueTags } });
 }) satisfies GetStaticPaths;
 
@@ -22,24 +22,14 @@ interface Props {
 const { page, uniqueTags } = Astro.props;
 
 const meta = {
-	description: "Ready my collection of posts and the things that interest me",
+	description: "Read my collection of posts and the things that interest me",
 	title: "Posts",
 };
 
-const paginationProps = {
-	...(page.url.prev && {
-		prevUrl: {
-			text: `← Previous Posts`,
-			url: page.url.prev,
-		},
-	}),
-	...(page.url.next && {
-		nextUrl: {
-			text: `Next Posts →`,
-			url: page.url.next,
-		},
-	}),
-};
+const paginationProps = buildPaginationProps(page.url, {
+	next: "Next Posts →",
+	prev: "← Previous Posts",
+});
 ---
 
 <PageLayout meta={meta}>

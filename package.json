@@ -9,7 +9,10 @@
 		"postbuild": "pagefind --site dist",
 		"preview": "astro preview",
 		"format": "prettier -w --cache . && prettier -w --cache **/*.astro",
-		"check": "astro check"
+		"check": "astro check",
+		"test": "astro sync && vitest run",
+		"test:watch": "vitest",
+		"test:coverage": "astro sync && vitest run --coverage"
 	},
 	"dependencies": {
 		"@astrojs/mdx": "^4.3.13",
@@ -38,13 +41,19 @@
 		"typescript": "^5.5.4"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": ["@tailwindcss/oxide", "@resvg/resvg-js", "esbuild", "sharp"]
+		"onlyBuiltDependencies": [
+			"@tailwindcss/oxide",
+			"@resvg/resvg-js",
+			"esbuild",
+			"sharp"
+		]
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.6",
 		"@types/eslint": "^8.56.10",
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
 		"@typescript-eslint/parser": "^8.0.0",
+		"@vitest/coverage-v8": "^4.1.10",
 		"astro-eslint-parser": "^1.0.2",
 		"eslint": "^8.57.0",
 		"eslint-import-resolver-typescript": "^3.6.1",
@@ -56,8 +65,10 @@
 		"eslint-plugin-perfectionist": "^2.8.0",
 		"eslint-plugin-regexp": "^2.5.0",
 		"eslint-plugin-typescript-sort-keys": "^3.2.0",
+		"happy-dom": "^20.10.6",
 		"prettier": "^3.3.3",
 		"prettier-plugin-astro": "0.14.1",
-		"prettier-plugin-tailwindcss": "^0.7.2"
+		"prettier-plugin-tailwindcss": "^0.7.2",
+		"vitest": "^4.1.10"
 	}
 }

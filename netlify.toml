@@ -3,3 +3,17 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Security headers for all routes. CSP notes:
+#  - 'unsafe-inline' script-src is required by the inline theme script (ThemeProvider.astro)
+#  - 'wasm-unsafe-eval' is required by Pagefind's WebAssembly search index
+#  - webmention.io img-src covers webmention author avatars
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://webmention.io; connect-src 'self'; font-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

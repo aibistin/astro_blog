@@ -1,7 +1,7 @@
 ---
-import { getAllPosts, sortMDByDate, getUniqueTagsWithCount } from "@/data/post";
+import { getPostUrl, getSortedPosts, getUniqueTagsWithCount } from "@/data/post";
 
-const allPosts = sortMDByDate(await getAllPosts());
+const allPosts = await getSortedPosts();
 const recentPosts = allPosts.slice(0, 5);
 const morePosts = allPosts.slice(5, 15);
 const topTags = getUniqueTagsWithCount(allPosts).slice(0, 15);
@@ -45,10 +45,10 @@ const currentPath = Astro.url.pathname;
 						recentPosts.map((post) => (
 							<li>
 								<a
-									aria-current={currentPath === `/posts/${post.slug}/` ? "page" : false}
+									aria-current={currentPath === getPostUrl(post) ? "page" : false}
 									class="block leading-snug text-textColor underline-offset-2 hover:text-accent hover:underline aria-[current=page]:font-semibold aria-[current=page]:text-accent"
 									data-astro-prefetch
-									href={`/posts/${post.slug}/`}
+									href={getPostUrl(post)}
 								>
 									{post.data.title}
 								</a>
@@ -67,7 +67,7 @@ const currentPath = Astro.url.pathname;
 											<a
 												class="block leading-snug text-textColor underline-offset-2 hover:text-accent hover:underline"
 												data-astro-prefetch
-												href={`/posts/${post.slug}/`}
+												href={getPostUrl(post)}
 											>
 												{post.data.title}
 											</a>

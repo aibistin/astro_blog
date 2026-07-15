@@ -3,7 +3,7 @@ import satori, { type SatoriOptions } from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import { siteConfig } from "@/site-config";
-import { getAllPosts } from "@/data/post";
+import { getAllPosts, getPostDisplayDate } from "@/data/post";
 import { getFormattedDate } from "@/utils";
 
 import RobotoMono from "@/assets/roboto-mono-regular.ttf";
@@ -82,10 +82,10 @@ export async function getStaticPaths() {
 	return posts
 		.filter(({ data }) => !data.ogImage)
 		.map((post) => ({
-			params: { slug: post.slug },
+			params: { slug: post.id },
 			props: {
 				title: post.data.title,
-				pubDate: post.data.updatedDate ?? post.data.publishDate,
+				pubDate: getPostDisplayDate(post),
 			},
 		}));
 }
