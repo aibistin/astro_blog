@@ -1,3 +1,4 @@
+import { type RehypePlugin, unified } from "@astrojs/markdown-remark";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
@@ -17,22 +18,27 @@ export default defineConfig({
 		domains: ["webmention.io"],
 	},
 	integrations: [expressiveCode(expressiveCodeOptions), icon(), sitemap(), mdx()],
+	// Astro 7: plugins are passed to the unified() processor instead of
+	// the deprecated markdown.remarkPlugins/rehypePlugins/remarkRehype options
 	markdown: {
-		rehypePlugins: [
-			[
-				rehypeExternalLinks,
-				{
-					rel: ["nofollow", "noopener", "noreferrer"],
-					target: "_blank",
-				},
+		processor: unified({
+			rehypePlugins: [
+				[
+					// cast bridges duplicate unified type trees under pnpm; runtime-compatible
+					rehypeExternalLinks as RehypePlugin,
+					{
+						rel: ["nofollow", "noopener", "noreferrer"],
+						target: "_blank",
+					},
+				],
 			],
-		],
-		remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
-		remarkRehype: {
-			footnoteLabelProperties: {
-				className: [""],
+			remarkPlugins: [remarkUnwrapImages, remarkReadingTime],
+			remarkRehype: {
+				footnoteLabelProperties: {
+					className: [""],
+				},
 			},
-		},
+		}),
 	},
 	// https://docs.astro.build/en/guides/prefetch/
 	prefetch: true,
