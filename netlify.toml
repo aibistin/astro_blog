@@ -2,7 +2,7 @@
   command = 'pnpm run prod_build && pnpm exec pagefind --site dist'
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22"
 
 # Security headers for all routes. CSP notes:
 #  - 'unsafe-inline' script-src is required by the inline theme script (ThemeProvider.astro)
