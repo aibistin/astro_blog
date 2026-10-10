@@ -15,9 +15,9 @@
 		"test:coverage": "astro sync && vitest run --coverage"
 	},
 	"dependencies": {
-		"@astrojs/mdx": "^7.0.3",
+		"@astrojs/mdx": "^8.0.2",
 		"@astrojs/rss": "^4.0.19",
-		"@astrojs/sitemap": "^3.7.3",
+		"@astrojs/sitemap": "^3.7.4",
 		"@iconify-json/devicon": "^1.1.49",
 		"@iconify-json/mdi": "^1.1.67",
 		"@iconify-json/skill-icons": "^1.1.9",
@@ -25,7 +25,7 @@
 		"@resvg/resvg-js": "^2.6.2",
 		"@tailwindcss/typography": "^0.5.19",
 		"@tailwindcss/vite": "^4.2.1",
-		"astro": "^7.0.9",
+		"astro": "^7.3.5",
 		"astro-expressive-code": "^0.44.0",
 		"astro-icon": "^1.1.5",
 		"mdast-util-to-string": "^4.0.0",
@@ -49,8 +49,8 @@
 		]
 	},
 	"devDependencies": {
-		"@astrojs/check": "^0.9.9",
-		"@astrojs/markdown-remark": "^7.2.1",
+		"@astrojs/check": "^0.9.10",
+		"@astrojs/markdown-remark": "^7.3.1",
 		"@types/eslint": "^8.56.10",
 		"@typescript-eslint/eslint-plugin": "^8.0.0",
 		"@typescript-eslint/parser": "^8.0.0",
